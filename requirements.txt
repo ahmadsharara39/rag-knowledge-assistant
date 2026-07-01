@@ -1,0 +1,6 @@
+# Core runtime — the service runs fully offline with just these.
+fastapi>=0.111
+uvicorn[standard]>=0.30
+pydantic>=2.7
+numpy>=1.26
+python-dotenv>=1.0

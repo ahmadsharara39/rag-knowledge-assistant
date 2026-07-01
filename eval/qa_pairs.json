@@ -1,0 +1,32 @@
+[
+  {
+    "question": "Which vector databases does the assistant support?",
+    "expected_source": "vector_databases.md",
+    "expected_keywords": ["faiss", "pinecone"]
+  },
+  {
+    "question": "What are the five stages of the RAG pipeline?",
+    "expected_source": "rag_pipeline.md",
+    "expected_keywords": ["chunk", "embed", "context"]
+  },
+  {
+    "question": "How does the service authenticate requests and prevent abuse?",
+    "expected_source": "security_and_deployment.md",
+    "expected_keywords": ["api key", "rate"]
+  },
+  {
+    "question": "How are secrets like API keys managed?",
+    "expected_source": "security_and_deployment.md",
+    "expected_keywords": ["environment"]
+  },
+  {
+    "question": "What similarity measure is used for semantic search?",
+    "expected_source": "vector_databases.md",
+    "expected_keywords": ["cosine"]
+  },
+  {
+    "question": "What happens if the answer is not in the retrieved context?",
+    "expected_source": "rag_pipeline.md",
+    "expected_keywords": ["enough information"]
+  }
+]

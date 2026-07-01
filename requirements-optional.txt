@@ -1,0 +1,6 @@
+# Production providers — install when you switch on real APIs / managed stores.
+openai>=1.30
+anthropic>=0.34
+pinecone>=5.0
+sentence-transformers>=3.0
+faiss-cpu>=1.8

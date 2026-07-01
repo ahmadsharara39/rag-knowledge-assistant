@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# Secrets / local config
+.env
+
+# Persisted vector index
+storage/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
