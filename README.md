@@ -65,7 +65,7 @@ cp .env.example .env
 # 4. Ingest the sample documents into the vector store
 python -m scripts.ingest --path data/sample_docs
 
-# 5. Run the API
+# 5. Run the API + web UI
 uvicorn app.main:app --reload
 
 # 6. Ask a question
@@ -75,7 +75,13 @@ curl -X POST http://localhost:8000/query \
   -d "{\"question\": \"What vector databases does the assistant support?\", \"top_k\": 3}"
 ```
 
-Interactive API docs (Swagger/OpenAPI) are served at `http://localhost:8000/docs`.
+- **Web UI:** `http://localhost:8000/` — paste documents, ask questions, and see
+  answers with highlighted inline citations and source snippets.
+- **Interactive API docs** (Swagger/OpenAPI): `http://localhost:8000/docs`.
+
+> The `x-api-key` in the UI/docs is the **app's** auth key (default
+> `dev-local-key`) — it is *not* your OpenAI/Anthropic key. Provider keys live
+> only in `.env`.
 
 ---
 
@@ -143,11 +149,12 @@ and are safe for CI.
 
 | Method | Path      | Description                                        |
 |--------|-----------|----------------------------------------------------|
+| GET    | `/`       | Web UI (single-page frontend)                      |
 | GET    | `/health` | Liveness + which providers are active              |
 | POST   | `/ingest` | Add documents (text) to the vector store           |
 | POST   | `/query`  | Ask a question; returns answer + cited sources     |
 
-All non-health routes require the `x-api-key` header.
+The `/ingest` and `/query` routes require the `x-api-key` header.
 
 ---
 

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAG Knowledge Assistant</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">◈</span>
+      <div>
+        <h1>Enterprise RAG Knowledge Assistant</h1>
+        <p class="subtitle">Grounded, cited answers over your own documents</p>
+      </div>
+    </div>
+    <div class="status" id="status">
+      <span class="pill" id="pill-llm">llm: —</span>
+      <span class="pill" id="pill-emb">emb: —</span>
+      <span class="pill" id="pill-store">store: —</span>
+      <span class="pill count" id="pill-count">0 vectors</span>
+    </div>
+  </header>
+
+  <div class="apikey-row">
+    <label for="apikey">API key</label>
+    <input id="apikey" type="password" value="dev-local-key" spellcheck="false" />
+    <span class="hint">Sent as the <code>x-api-key</code> header. Default for local dev is <code>dev-local-key</code>.</span>
+  </div>
+
+  <main class="grid">
+    <!-- Ingest panel -->
+    <section class="card">
+      <h2>1 · Add knowledge</h2>
+      <p class="muted">Paste any text. It gets chunked, embedded, and indexed for semantic search.</p>
+      <label class="field-label" for="source">Source label</label>
+      <input id="source" type="text" placeholder="e.g. handbook.md" value="pasted-note.md" />
+      <label class="field-label" for="doctext">Document text</label>
+      <textarea id="doctext" rows="8" placeholder="Paste a policy, FAQ, article, notes…"></textarea>
+      <button id="ingest-btn" class="btn">Ingest document</button>
+      <div id="ingest-result" class="result-line"></div>
+    </section>
+
+    <!-- Query panel -->
+    <section class="card">
+      <h2>2 · Ask a question</h2>
+      <p class="muted">The assistant answers only from indexed documents and cites its sources.</p>
+      <label class="field-label" for="question">Question</label>
+      <textarea id="question" rows="3" placeholder="What does the document say about…?"></textarea>
+      <div class="controls">
+        <label for="topk">Top-k</label>
+        <input id="topk" type="number" min="1" max="20" value="3" />
+        <button id="ask-btn" class="btn primary">Ask</button>
+      </div>
+
+      <div id="answer-wrap" class="answer-wrap hidden">
+        <h3>Answer</h3>
+        <div id="answer" class="answer"></div>
+        <h3>Sources</h3>
+        <div id="citations" class="citations"></div>
+      </div>
+      <div id="query-error" class="error hidden"></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>Runs offline by default · switch to OpenAI / Anthropic + Pinecone via <code>.env</code></span>
+    <a href="/docs" target="_blank" rel="noopener">API docs ↗</a>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

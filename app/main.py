@@ -1,16 +1,20 @@
 """FastAPI application exposing the RAG pipeline.
 
 Routes:
-  GET  /health  — liveness + active providers (public)
-  POST /ingest  — add documents (auth + rate limit)
-  POST /query   — ask a grounded question (auth + rate limit)
+  GET  /         — web UI (single-page frontend)
+  GET  /health   — liveness + active providers (public)
+  POST /ingest   — add documents (auth + rate limit)
+  POST /query    — ask a grounded question (auth + rate limit)
 """
 
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import Depends, FastAPI, Request
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from . import __version__
 from .auth import enforce_rate_limit, require_api_key
@@ -53,6 +57,17 @@ app = FastAPI(
 def _auth_and_limit(request: Request, api_key: str = Depends(require_api_key)) -> str:
     enforce_rate_limit(request, api_key)
     return api_key
+
+
+# --- Web UI ---------------------------------------------------------------
+_FRONTEND = Path(__file__).resolve().parent.parent / "frontend"
+if (_FRONTEND / "static").is_dir():
+    app.mount("/static", StaticFiles(directory=_FRONTEND / "static"), name="static")
+
+
+@app.get("/", include_in_schema=False)
+def index() -> FileResponse:
+    return FileResponse(_FRONTEND / "index.html")
 
 
 @app.get("/health", response_model=HealthResponse)

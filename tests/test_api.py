@@ -11,6 +11,13 @@ def setup_function():
     reset_rate_limits()
 
 
+def test_ui_is_served_at_root():
+    resp = client.get("/")
+    assert resp.status_code == 200
+    assert "text/html" in resp.headers["content-type"]
+    assert "RAG Knowledge Assistant" in resp.text
+
+
 def test_health_is_public():
     resp = client.get("/health")
     assert resp.status_code == 200
